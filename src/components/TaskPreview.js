@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 function TaskPreview(props) {
   const { title, description } = props;
-  const [checked, setchecked] = useState(false);
 
   return (
     <TaskContainer>
@@ -12,10 +11,7 @@ function TaskPreview(props) {
         <TaskTitle>{title}</TaskTitle>
         <TaskDescription>{description}</TaskDescription>
       </div>
-      <Checkbox
-        color="primary"
-        onChange={(e) => setchecked(e.target.checked)}
-      />
+      <Checkbox color="primary" />
     </TaskContainer>
   );
 }
