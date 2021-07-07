@@ -2,12 +2,22 @@ import React from "react";
 import styled from "styled-components";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { IconButton } from "@material-ui/core";
+import { auth, db } from "../firebase";
 
-function Project({ projectTitle }) {
+function Project({ projectTitle, projectId }) {
+  function handleDeleteProject() {
+    const user = auth.currentUser;
+    db.collection(user.uid)
+      .doc("Data")
+      .collection("Projects")
+      .doc(projectId)
+      .delete();
+  }
+
   return (
     <ProjectContainer>
       <ProjectTitle>{projectTitle}</ProjectTitle>
-      <IconButton>
+      <IconButton onClick={handleDeleteProject}>
         <DeleteIcon />
       </IconButton>
     </ProjectContainer>
