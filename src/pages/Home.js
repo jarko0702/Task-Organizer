@@ -6,7 +6,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Header from "../components/Header";
 import TaskPreview from "../components/TaskPreview";
 import { useHistory } from "react-router-dom";
-import AuthCheck from "../AuthCheck";
 
 function Home() {
   const history = useHistory();

@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
+import React from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Project from "../components/Project";
-import { auth, db } from "../firebase";
 
 function Tasks() {
-  const [user] = useAuthState(auth);
-  const [projects, setProjects] = useState();
+  //   const [user] = useAuthState(auth);
+  //   const [projects, setProjects] = useState();
 
   //   useEffect(() => {
   //     db.collection(user.uid)
