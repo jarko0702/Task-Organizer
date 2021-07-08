@@ -34,7 +34,7 @@ function ViewTask() {
       .delete();
   }
 
-  if (tasks == undefined || null) {
+  if (tasks === undefined || null) {
     return <h1>Searching for tasks...</h1>;
   }
   return (
