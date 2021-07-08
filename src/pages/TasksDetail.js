@@ -8,12 +8,16 @@ import { auth, db } from "../firebase";
 import AddIcon from "@material-ui/icons/Add";
 import { IconButton } from "@material-ui/core";
 import ViewTask from "../components/ViewTask";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 function Tasks() {
   const [user] = useAuthState(auth);
   const { projectId } = useParams();
-
   const [projectDetail, setProjectDetail] = useState();
+
+  const [addedTaskName, setAddedTaskName] = useState();
+  const [addedTaskDescription, setAddedTaskDescription] = useState();
 
   useEffect(() => {
     if (projectId !== undefined && user !== null) {
@@ -26,6 +30,20 @@ function Tasks() {
         });
     }
   }, [projectId, user]);
+
+  function handleAddedTask(e) {
+    e.preventDefault();
+
+    db.collection(user.uid)
+      .doc("Data")
+      .collection("Projects")
+      .doc(projectId)
+      .collection("Tasks")
+      .add({ name: addedTaskName, description: addedTaskDescription });
+
+    setAddedTaskName("");
+    setAddedTaskDescription("");
+  }
 
   if (projectDetail === undefined || null) {
     return (
@@ -54,12 +72,33 @@ function Tasks() {
           <TaskContent>
             <TaskHeader>
               <TaskTitle>{projectDetail.name}</TaskTitle>
-              <AddTask>
-                <IconButton>
-                  <AddIcon fontSize="large" />
-                </IconButton>
-                <h3>Add Task</h3>
-              </AddTask>
+              <Popup
+                trigger={
+                  <AddTask>
+                    <IconButton>
+                      <AddIcon fontSize="large" />
+                    </IconButton>
+                    <h3>Add Task</h3>
+                  </AddTask>
+                }
+                position="bottom"
+              >
+                <form onSubmit={handleAddedTask}>
+                  <input
+                    id="name"
+                    placeholder="Task name"
+                    onChange={(e) => setAddedTaskName(e.target.value)}
+                    value={addedTaskName}
+                  ></input>
+                  <input
+                    id="description"
+                    placeholder="Task descripton"
+                    onChange={(e) => setAddedTaskDescription(e.target.value)}
+                    value={addedTaskDescription}
+                  ></input>
+                  <button type="submit">Add Task</button>
+                </form>
+              </Popup>
             </TaskHeader>
             <ViewTask />
           </TaskContent>
@@ -100,6 +139,7 @@ const AddTask = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  max-width: 175px;
 
   :hover {
     cursor: pointer;
