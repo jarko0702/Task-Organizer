@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useParams } from "react-router-dom";
 import { auth, db } from "../firebase";
+import styled from "styled-components";
 
 function ViewTask() {
   const { projectId } = useParams();
@@ -40,16 +41,41 @@ function ViewTask() {
   return (
     <>
       {tasks.map((task) => (
-        <>
-          <h1>Name: {task.name}</h1>
-          <p>Description: {task.description}</p>
+        <Container>
+          <TaskInfo>
+            <TaskTitle>{task.name}</TaskTitle>
+            <TaskDescription>{task.description}</TaskDescription>
+          </TaskInfo>
           <IconButton onClick={() => handleDeleteTask(task.id)}>
             <Delete />
           </IconButton>
-        </>
+        </Container>
       ))}
     </>
   );
 }
 
 export default ViewTask;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid lightgray;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 7px;
+`;
+
+const TaskInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const TaskTitle = styled.h2`
+  margin: 0px;
+`;
+
+const TaskDescription = styled.p`
+  margin-bottom: 2px;
+`;

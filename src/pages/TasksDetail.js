@@ -83,21 +83,22 @@ function Tasks() {
                 }
                 position="bottom"
               >
-                <form onSubmit={handleAddedTask}>
-                  <input
+                <TaskFrom onSubmit={handleAddedTask}>
+                  <TaskNameInput
+                    required
                     id="name"
                     placeholder="Task name"
                     onChange={(e) => setAddedTaskName(e.target.value)}
                     value={addedTaskName}
-                  ></input>
-                  <input
+                  ></TaskNameInput>
+                  <TaskDescriptionInput
                     id="description"
                     placeholder="Task descripton"
                     onChange={(e) => setAddedTaskDescription(e.target.value)}
                     value={addedTaskDescription}
-                  ></input>
-                  <button type="submit">Add Task</button>
-                </form>
+                  ></TaskDescriptionInput>
+                  <AddButton type="submit">Add Task</AddButton>
+                </TaskFrom>
               </Popup>
             </TaskHeader>
             <ViewTask />
@@ -145,5 +146,52 @@ const AddTask = styled.div`
     cursor: pointer;
     background-color: #f5f5f5;
     border-radius: 15px;
+  }
+`;
+
+const TaskFrom = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+`;
+
+const TaskNameInput = styled.input`
+  border: 1px solid lightgray;
+  padding: 10px;
+  margin: 10px;
+
+  :hover {
+    border: 1px solid lightgray;
+  }
+
+  :focus {
+    border: 1px solid lightgray;
+  }
+`;
+
+const TaskDescriptionInput = styled.textarea`
+  border: 1px solid lightgray;
+  padding: 10px;
+  margin: 10px;
+  overflow-y: auto;
+
+  :hover {
+    border: 1px solid lightgray;
+  }
+
+  :focus {
+    border: 1px solid lightgray;
+  }
+`;
+
+const AddButton = styled.button`
+  background: none;
+  border: none;
+  padding: 5px;
+
+  :hover {
+    background-color: #f5f5f5;
+    border-radius: 15px;
+    cursor: pointer;
   }
 `;
