@@ -3,8 +3,11 @@ import styled from "styled-components";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { IconButton } from "@material-ui/core";
 import { auth, db } from "../firebase";
+import { useHistory } from "react-router-dom";
 
 function Project({ projectTitle, projectId }) {
+  const history = useHistory();
+
   function handleDeleteProject() {
     const user = auth.currentUser;
     db.collection(user.uid)
@@ -14,8 +17,12 @@ function Project({ projectTitle, projectId }) {
       .delete();
   }
 
+  function openProject() {
+    history.push(`/tasks/${projectId}`);
+  }
+
   return (
-    <ProjectContainer>
+    <ProjectContainer onClick={openProject}>
       <ProjectTitle>{projectTitle}</ProjectTitle>
       <IconButton onClick={handleDeleteProject}>
         <DeleteIcon />
