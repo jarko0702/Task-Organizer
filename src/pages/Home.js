@@ -1,11 +1,12 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import styled from "styled-components";
 import { auth } from "../firebase";
-import { Avatar } from "@material-ui/core";
+import { Avatar, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Header from "../components/Header";
 import TaskPreview from "../components/TaskPreview";
 import { useHistory } from "react-router-dom";
+import LaunchIcon from "@material-ui/icons/Launch";
 
 function Home() {
   const history = useHistory();
@@ -27,9 +28,12 @@ function Home() {
         <Username>Welcome {user.displayName}</Username>
         <CardList>
           <Card>
-            <CardTitle onClick={() => history.push("/tasks")}>
-              Upcomming tasks
-            </CardTitle>
+            <CardHeader onClick={() => history.push("/tasks")}>
+              <CardTitle>Upcomming tasks</CardTitle>
+              <IconButton>
+                <LaunchIcon />
+              </IconButton>
+            </CardHeader>
             <TaskPreview title="Test" description="description" />
           </Card>
           <Card>
@@ -83,6 +87,11 @@ const Card = styled.div`
   max-width: 350px;
   height: 30vh;
   min-height: 200px;
+`;
+
+const CardHeader = styled.div`
+  display: flex;
+  flex-grow: 1;
 `;
 
 const CardTitle = styled.h3`
